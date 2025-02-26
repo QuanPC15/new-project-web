@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Podcard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {  
+      font-family: 'Arial', sans-serif; /* Đặt font chữ là Arial */
+      background: url('back3.jpg') no-repeat center center fixed; /* Hình nền mặc định */
+      background-size: cover; /* Bao phủ toàn bộ nền */
+      margin: 0; /* Xóa margin mặc định */
+      padding: 0; /* Xóa padding mặc định */
+      color: #000; /* Đặt màu chữ là đen */
+      height: 200vh; /* Chiều cao dài hơn */
+      overflow-y: scroll; /* Hiển thị thanh cuộn dọc */
+      position: relative; /* Đặt vị trí tương đối */
+    }
+
+    .container { 
+      display: flex; /* Sử dụng flexbox */
+      flex-direction: column; /* Hướng cột */
+      padding: 20px; /* Padding xung quanh container */
+      height: 100%; /* Chiều cao toàn màn hình */
+      position: relative; /* Đặt vị trí tương đối */
+    }
+
+    .header {
+      display: flex; /* Sử dụng flexbox */
+      align-items: center; /* Căn giữa theo chiều dọc */
+      position: absolute; /* Định vị tuyệt đối */
+      top: 10px; /* Cách trên 10px */
+      left: 20px; /* Cách trái 20px */
+      z-index: 2; /* Đặt z-index */
+    }
+
+    .logo img { 
+      max-height: 90px; /* Chiều cao tối đa 90px */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5); /* Thêm bóng */
+    }
+
+    .school-name {
+      margin-left: 20px; /* Cách trái 20px */
+      font-size: 1.5rem; /* Kích thước font chữ */
+      color: #000; /* Màu chữ */
+    }
+
+    .main { 
+      display: flex; /* Sử dụng flexbox */
+      justify-content: center; /* Căn giữa theo chiều ngang */
+      align-items: center; /* Căn giữa theo chiều dọc */
+      height: 100%; /* Chiều cao toàn màn hình */
+      position: relative; /* Đặt vị trí tương đối */
+      z-index: 1; /* Đặt z-index */
+    }
+
+    .left { 
+      flex: 1; /* Tăng trưởng flex */
+      padding: 20px; /* Padding */
+      z-index: 1; /* Đặt z-index */
+      text-align: justify; /* Căn đều văn bản */
+      text-indent: 2em; /* Thụt lề dòng đầu */
+      margin-left: 60px; /* Đẩy phần nội dung qua bên phải một chút */
+      margin-top: 20px; /* Đẩy phần nội dung xuống dưới một chút */
+    }
+
+    .right { 
+      flex: 1; /* Tăng trưởng flex */
+      display: flex; /* Sử dụng flexbox */
+      flex-direction: column; /* Hướng cột */
+      align-items: flex-start; /* Căn trái theo chiều ngang */
+      justify-content: flex-start; /* Căn trên theo chiều dọc */
+      position: relative; /* Đặt vị trí tương đối */
+      margin-left: -375px; /* Đẩy phần nội dung qua bên phải gần hình ảnh */
+      margin-top: 20px; /* Đẩy phần nội dung xuống dưới một chút */
+    }
+
+    .podcard { 
+      padding: 20px; /* Padding */
+      border-radius: 20px; /* Bo tròn góc */
+      max-width: 50%; /* Chiều rộng tối đa */
+      margin-top: 20px; /* Đẩy hình ảnh xuống một tí */
+    }
+
+    .podcard img { 
+      max-width: 80%; /* Chiều rộng tối đa */
+      height: auto; /* Chiều cao tự động */
+      border-radius: 15px; /* Bo tròn góc */
+      display: block; /* Hiển thị dạng khối */
+      margin: 0 auto; /* Căn giữa hình ảnh */
+      transition: transform 0.3s ease; /* Hiệu ứng chuyển đổi */
+    }
+
+    .podcard img:hover {
+      transform: scale(1.05); /* Phóng to khi hover */
+    }
+
+    .audio-controls { 
+      position: relative; /* Đặt vị trí tương đối */
+      margin-top: 10px; /* Cách trên 10px */
+      background: #fff; /* Màu nền trắng */
+      padding: 10px; /* Padding */
+      border-radius: 20px; /* Bo tròn góc */
+      border: 1px solid #000; /* Viền nét liền mảnh màu đen */
+      color: #000; /* Chữ màu đen */
+      text-align: center; /* Căn giữa văn bản */
+      width: 40%; /* Chiều rộng 40% */
+      margin: 0; /* Căn giữa khung */
+    }
+
+    audio { 
+      width: 100%; /* Chiều rộng toàn phần */
+    }
+
+    audio::-webkit-media-controls-panel { 
+      background-color: #fff; /* Màu nền panel */
+    }
+
+    audio::-webkit-media-controls-timeline { 
+      background-color: #fff; /* Màu nền timeline */
+      border-radius: 5px; /* Bo tròn góc */
+    }
+
+    audio::-webkit-media-controls-current-time-display, 
+    audio::-webkit-media-controls-time-remaining-display { 
+      color: #000; /* Màu chữ */
+    }
+
+    h2 {
+      font-size: 2.5rem; /* Kích thước font chữ */
+      color: #000; /* Màu chữ */
+      margin-left: 0; /* Đẩy tựa đề qua bên trái gần hình ảnh */
+      display: inline-block; /* Để dấu chấm hỏi cùng dòng với tựa đề */
+    }
+
+    .publisher {
+      font-size: 1rem; /* Kích thước font chữ */
+      color: #000; /* Màu chữ */
+      margin-left: 0; /* Đẩy phần nội dung qua bên phải một chút */
+      margin-top: -20px; /* Đẩy phần nội dung lên trên */
+    }
+
+    .author {
+      font-size: 1rem; /* Kích thước font chữ */
+      color: #000; /* Màu chữ */
+      margin-left: 0; /* Đẩy phần nội dung qua bên phải một chút */
+      margin-top: 10px; /* Cách trên 10px */
+    }
+
+    h3 {
+      color: #000; /* Màu chữ */
+    }
+
+    /* Thêm thanh cuộn dọc */
+    ::-webkit-scrollbar {
+      width: 12px; /* Độ rộng của thanh cuộn */
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1; /* Màu nền của thanh cuộn */
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #888; /* Màu của thanh cuộn */
+      border-radius: 10px; /* Bo tròn góc */
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555; /* Màu của thanh cuộn khi hover */
+    }
+
+    .scrollable {
+      height: 200vh; /* Chiều cao dài hơn */
+      overflow-y: scroll; /* Hiển thị thanh cuộn dọc */
+      padding: 20px; /* Padding */
+      border-radius: 20px; /* Bo tròn góc */
+      margin: 20px; /* Cách đều xung quanh */
+      background: rgba(255, 255, 255, 0.5); /* Nền trắng mờ */
+      border: 1px solid #ccc; /* Viền màu xám nhạt */
+      text-align: center; /* Căn giữa văn bản */
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <img src="nq.jpg" alt="Logo"> <!-- Hình ảnh logo -->
+      </div>
+      <div class="school-name">
+       Trường THCS Ngô Quyền <!-- Tên trường -->
+      </div>
+    </div>
+    <div class="main">
+      <div class="left">
+        <div class="podcard">
+          <img src="sach.jpg" alt="Podcard Hình Ảnh"> <!-- Hình ảnh podcard -->
+        </div>
+      </div>
+      <div class="right">
+        <h2>Tử Tế Đáng Giá Bao Nhiêu?</h2> <!-- Tiêu đề giới thiệu -->
+        <div class="publisher"><strong>Nhà xuất bản:</strong> Nhà xuất bản Trẻ</div>
+        <div class="author"><strong>Tác giả:</strong> Bernadette Russell</div>
+        <div class="audio-controls">
+          <audio src="podcat.mp3" type="audio/mp3" controls></audio> <!-- Trình phát audio -->
+        </div>
+      </div>
+    </div>
+    <div class="scrollable">
+      <p>Giới thiệu sách</p>
+    </div>
+  </div>
+</body>
+</html>
